@@ -7,25 +7,50 @@ module.exports = {
   output: {
     // To the `dist` folder
     path: path.join(__dirname, 'dist'),
+    publicPath: '/dist/',
     // With the filename `build.js` so it's dist/build.js
     filename: 'build.js'
   },
   module: {
-    // Special compilation rules
-    loaders: [
+    rules: [
       {
-        // Ask webpack to check: If this file ends with .js, then apply some transforms
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ],
+      }, {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+          }
+          // other vue-loader options go here
+        }
+      },
+      {
         test: /\.js$/,
-        // Transform it with babel
         loader: 'babel-loader',
-        // don't transform node_modules folder (which don't need to be compiled)
         exclude: /node_modules/
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]'
+        }
       }
     ]
   },
+//   resolve: {
+//     alias: {
+//       vue: 'vue/dist/vue.js'
+//     }
+//   }
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js'
-    }
-  }
+      'vue$': 'vue/dist/vue.esm.js'
+    },
+    extensions: ['*', '.js', '.vue', '.json']
+  },
 }
