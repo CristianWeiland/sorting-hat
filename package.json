@@ -1,0 +1,29 @@
+{
+  "name": "sorting-hat",
+  "version": "1.0.0",
+  "description": "Team sorter",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CristianWeiland/sorting-hat.git"
+  },
+  "author": "Cristian Weiland",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CristianWeiland/sorting-hat/issues"
+  },
+  "homepage": "https://github.com/CristianWeiland/sorting-hat#readme",
+  "dependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-0": "6.24.1",
+    "babel-runtime": "6.26.0",
+    "vue": "2.5.13",
+    "webpack": "3.10.0"
+  }
+}
