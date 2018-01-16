@@ -3,3 +3,4 @@ dist
 build
 *.config
 *.data
+src/data/campers.js
