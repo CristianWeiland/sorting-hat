@@ -1,11 +1,13 @@
 <template>
   <div v-if="!authenticated" align="center">{{msg}}
     <div class="col-sm-4">
-      <label style="margin-top: 50px">Usuário</label>
-      <input class="form-control form-group" v-model="username"></input>
-      <label class="form-group">Password</label>
-      <input type="password" class="form-control form-group" v-model="password"></input>
-      <button v-on:click="authenticate()" class="btn btn-secondary">Fazer Login</button>
+      <form v-on:submit.prevent ="authenticate()">
+        <label style="margin-top: 50px">Usuário</label>
+        <input class="form-control form-group" v-model="username"></input>
+        <label class="form-group">Password</label>
+        <input type="password" class="form-control form-group" v-model="password"></input>
+        <button class="btn btn-secondary">Fazer Login</button>
+      </form>
     </div>
   </div>
   <div v-else>
@@ -14,6 +16,23 @@
         <img style="width: 30%" src="../assets/imgs/sorting-hat.jpg"></img>
     </div>
     <div class="content" style="padding: 50px; padding-top: 0px ">
+
+      <div align="center">
+        <!-- TODO: Descobir porque a tag form atualiza a página... -->
+        <!-- <form class="col-sm-4"> -->
+        <div class="col-sm-4">
+          <label class="form-group">Maior diferença de média de idades</label>
+          <input type="text" class="form-control form-group" v-model="avgAgeDiff"></input>
+          <label class="form-group">Maior número de tentativas</label>
+          <input type="number" class="form-control form-group" v-model="maxCount"></input>
+          <button  v-on:click="redraw()" class="btn btn-secondary" style="margin-bottom: 50px">Sortear</button>
+        <!-- </form>-->
+
+          <div>
+            <label>Maior diferença entre idades: {{ this.avgAgeDifference().toFixed(2) }}</label>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-sm-3">
@@ -103,19 +122,27 @@ export default {
       msg: '',
       users: ['Ramon'],
       passwords: ['ramon123'],
+      avgAgeDiff: 1,
+      maxCount: 100,
     };
   },
   mounted() {
-    this.createTeams();
-    let counter = 0;
-    while(this.avgAgeDifference() > 0.2 && counter < 100) {
-      this.createTeams();
-      console.log(`Avg is ${this.avgAgeDifference()}`);
-      console.log(counter);
-      counter += 1;
-    }
+    this.redraw();
   },
   methods: {
+    redraw() {
+      const maxAvgDiff = this.avgAgeDiff ? this.avgAgeDiff : 1;
+      const maxCount = this.maxCount ? this.maxCount : 100;
+
+      this.createTeams();
+      let counter = 0;
+      while(this.avgAgeDifference() > maxAvgDiff && counter < maxCount) {
+        this.createTeams();
+        console.log(`Avg is ${this.avgAgeDifference()}`);
+        console.log(counter);
+        counter += 1;
+      }
+    },
     authenticate() {
       if (this.users.some((username) => username === this.username) && this.passwords.some((password) => password === this.password)) {
         this.authenticated = true;
