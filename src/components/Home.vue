@@ -1,5 +1,14 @@
 <template>
-  <div>
+  <div v-if="!authenticated" align="center">{{msg}}
+    <div class="col-sm-4">
+      <label style="margin-top: 50px">Usuário</label>
+      <input class="form-control form-group" v-model="username"></input>
+      <label class="form-group">Password</label>
+      <input type="password" class="form-control form-group" v-model="password"></input>
+      <button v-on:click="authenticate()" class="btn btn-secondary">Fazer Login</button>
+    </div>
+  </div>
+  <div v-else>
     <h1 class="blue" style="margin-top: 20px; z-index: 1001; position: relative">Chapéu Seletor RDUS</h1>
     <div style="text-align: center; margin-top: -60px">
         <img style="width: 30%" src="../assets/imgs/sorting-hat.jpg"></img>
@@ -88,16 +97,32 @@ export default {
       },
       barChartOpts: {},
       refreshBarChart: false,
+      authenticated: false,
+      username: '',
+      password: '',
+      msg: '',
+      users: ['Ramon'],
+      passwords: ['ramon123'],
     };
   },
   mounted() {
     this.createTeams();
-    while(this.avgAgeDifference() > 0.2) {
+    let counter = 0;
+    while(this.avgAgeDifference() > 0.2 && counter < 100) {
       this.createTeams();
       console.log(`Avg is ${this.avgAgeDifference()}`);
+      console.log(counter);
+      counter += 1;
     }
   },
   methods: {
+    authenticate() {
+      if (this.users.some((username) => username === this.username) && this.passwords.some((password) => password === this.password)) {
+        this.authenticated = true;
+      } else {
+        this.msg = 'Usuário ou senha inválidos. Se vc não tem um, peça para o Cristian :)';
+      }
+    },
     updateCharts(teamIdx, data, datasetIdx) {
       this.barChartData.datasets[datasetIdx].data[teamIdx] = data;
       this.refreshBarChart = true;

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": " webpack-dev-server --inline --hot",
-    "build": "webpack --progress --hide-modules"
+    "build": "webpack --progress --hide-modules",
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "vue-html-loader": "1.2.4",
     "vue-loader": "13.7.0",
     "vue-template-compiler": "2.5.13",
-    "webpack": "3.10.0"
+    "webpack": "3.10.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }
